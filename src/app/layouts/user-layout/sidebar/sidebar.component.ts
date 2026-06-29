@@ -39,8 +39,9 @@ export class SidebarComponent {
         this.authService.clearSession();
         this.router.navigate([AUTH_CONSTANTS.ROUTES.LOGIN]);
       },
-      error: () => {
-        alert('Logout failed, please try again.');
+      error: (err) => {
+        console.log(err.status);
+        console.log(err.error);
       },
     });
   }
