@@ -1,0 +1,39 @@
+@if (mobileMenuOpen()) {
+  <app-sidebar
+    class="fixed inset-y-0 left-0 z-50 md:hidden"
+    [collapsed]="false"
+    [mobileMenuOpen]="true"
+    (sidebarToggled)="toggleSidebar()"
+    (mobileMenuClosed)="toggleMobileMenu()"
+  >
+  </app-sidebar>
+}
+
+@if (mobileMenuOpen()) {
+  <div
+    class="mobile-overlay fixed inset-0 bg-white/50 z-40 md:hidden"
+    (click)="toggleMobileMenu()"
+  ></div>
+}
+
+<div class="flex h-screen w-full">
+  <app-sidebar
+    class="hidden md:flex flex-shrink-0"
+    [collapsed]="collapsed()"
+    [mobileMenuOpen]="mobileMenuOpen()"
+    (sidebarToggled)="toggleSidebar()"
+    (mobileMenuClosed)="toggleMobileMenu()"
+  >
+  </app-sidebar>
+
+  <div class="flex flex-col flex-1 w-full min-w-0">
+    <app-navbar (mobileMenuToggled)="toggleMobileMenu()"></app-navbar>
+
+    <main class="flex-1 overflow-auto w-full">
+      <router-outlet></router-outlet>
+    </main>
+    @if (!mobileMenuOpen()) {
+      <app-bottom-nav></app-bottom-nav>
+    }
+  </div>
+</div>

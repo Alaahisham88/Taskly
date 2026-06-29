@@ -1,0 +1,118 @@
+<section
+  class="bg-surface-low text-dark-grey p-4 h-screen transition-all duration-400 overflow-hidden"
+  [class.w-64]="!collapsed"
+  [class.w-20]="collapsed"
+>
+  <div class="logo pb-8">
+    <a routerLink="/" class="flex items-center px-2 gap-3">
+      <img src="assets/images/Icon.png" alt="Logo" />
+      <h2
+        class="uppercase font-bold text-xl tracking-tighter transition-opacity duration-200"
+        [class.opacity-0]="collapsed"
+        [class.opacity-100]="!collapsed"
+      >
+        taskly
+      </h2>
+    </a>
+  </div>
+
+  <div class="side-links flex flex-col gap-1 h-2/3">
+    <a
+      routerLink="/projects"
+      routerLinkActive="text-primary bg-white shadow-card"
+      class="flex items-center gap-3 px-3 py-2.5 hover:shadow-card rounded-sm hover:bg-white cursor-pointer"
+      (click)="closeMobileMenu()"
+    >
+      <i class="fa-regular fa-folder-open text-xl"></i>
+      <span
+        class="text-sm font-medium transition-opacity duration-200"
+        [class.hidden]="collapsed"
+        >Projects</span
+      >
+    </a>
+
+    <a
+      routerLink="/project-ebics"
+      routerLinkActive="text-primary bg-white shadow-card"
+      class="flex items-center gap-3 px-3 py-2.5 hover:shadow-card rounded-sm hover:bg-white cursor-pointer"
+      (click)="closeMobileMenu()"
+    >
+      <i class="fa-solid fa-folder-tree text-xl"></i>
+
+      <span
+        class="text-sm font-medium transition-opacity duration-200"
+        [class.hidden]="collapsed"
+        >Project Ebics</span
+      >
+    </a>
+
+    <a
+      routerLink="/project-tasks"
+      routerLinkActive="text-primary bg-white shadow-card"
+      class="flex items-center gap-3 px-3 py-2.5 hover:shadow-card rounded-sm hover:bg-white cursor-pointer"
+      (click)="closeMobileMenu()"
+    >
+      <i class="fa-solid fa-list-check text-xl"></i>
+
+      <span
+        class="text-sm font-medium transition-opacity duration-200"
+        [class.hidden]="collapsed"
+        >Project Tasks</span
+      >
+    </a>
+
+    <a
+      routerLink="/project-members"
+      routerLinkActive="text-primary bg-white shadow-card"
+      class="flex items-center gap-3 px-3 py-2.5 hover:shadow-card rounded-sm hover:bg-white cursor-pointer"
+      (click)="closeMobileMenu()"
+    >
+      <i class="fa-solid fa-user-group text-xl"></i>
+
+      <span
+        class="text-sm font-medium transition-opacity duration-200"
+        [class.hidden]="collapsed"
+        >Project Members</span
+      >
+    </a>
+
+    <a
+      routerLink="/project-ebics"
+      routerLinkActive="text-primary bg-white shadow-card"
+      class="flex items-center gap-3 px-3 py-2.5 hover:shadow-card rounded-sm hover:bg-white cursor-pointer"
+      (click)="closeMobileMenu()"
+    >
+      <i class="fa-solid fa-circle-info text-xl"></i>
+      <span
+        class="text-sm font-medium transition-opacity duration-200"
+        [class.hidden]="collapsed"
+        >Project Details</span
+      >
+    </a>
+  </div>
+
+  <div class="border-t border-border-light flex flex-col gap-1 pt-6">
+    <button
+      (click)="this.sidebarToggled.emit()"
+      class="hidden md:flex items-center gap-3 px-3 py-2.5 cursor-pointer"
+    >
+      <i class="fa-solid fa-chevron-left text-xl"></i>
+      <span
+        class="text-sm font-medium transition-opacity duration-200"
+        [class.hidden]="collapsed"
+        >Collapse</span
+      >
+    </button>
+    <button
+      (click)="logout()"
+      class="flex items-center gap-3 px-3 py-2.5 cursor-pointer"
+    >
+      <i class="fa-solid fa-arrow-right-from-bracket text-error text-xl"></i>
+      <span
+        class="text-sm font-medium text-error transition-opacity duration-200"
+        [class.hidden]="collapsed"
+        >Logout</span
+      >
+    </button>
+  </div>
+</section>

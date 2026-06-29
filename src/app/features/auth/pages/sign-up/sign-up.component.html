@@ -1,0 +1,191 @@
+<section
+  class="container m-auto flex flex-col items-center justify-center md:pb-12"
+>
+  <div
+    class="md:bg-white max-w-xl px-6 md:p-12 rounded-lg md:shadow-md flex flex-col gap-6"
+  >
+    <div class="flex flex-col md:items-center gap-2">
+      <h2 class="text-3xl font-semibold text-dark-grey">
+        Create your workspace
+      </h2>
+      <p class="text-grey text-body-14">
+        Join the editorial approach to task management.
+      </p>
+    </div>
+
+    <div class="pb-4">
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col gap-6">
+          <div>
+            <label
+              for="name"
+              class="font-bold text-dark-grey text-label uppercase tracking-wider"
+            >
+              Name
+            </label>
+            <input
+              formControlName="name"
+              id="name"
+              name="name"
+              type="text"
+              class="bg-surface-high mt-1 block w-full p-form-valid-x p-form-valid-y rounded-sm shadow-sm focus:outline-none focus:shadow-main/44 focus:shadow-md"
+              placeholder="Enter your full name"
+            />
+            <div class="px-1 mt-1">
+              <p class="text-light-grey text-label">
+                3-50 characters, letters only.
+              </p>
+            </div>
+
+            @if (getControl('name')?.errors && getControl('name')?.touched) {
+              <div
+                class="text-error bg-warning-container w-full p-form-error-x p-form-error-y rounded-sm shadow-sm mt-2 relative"
+              >
+                <ul class="list-none">
+                  @if (getControl('name')?.getError('required')) {
+                    <li>Input is required.</li>
+                  }
+                  @if (getControl('name')?.getError('minlength')) {
+                    <li>Input must be at least 3 characters long.</li>
+                  }
+                  @if (getControl('name')?.getError('maxlength')) {
+                    <li>Input must not exceed 50 characters.</li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
+
+          <div>
+            <label
+              for="email"
+              class="font-bold text-dark-grey text-label uppercase tracking-wider"
+            >
+              Email
+            </label>
+            <input
+              formControlName="email"
+              id="email"
+              name="email"
+              type="email"
+              class="bg-surface-high mt-1 block w-full p-form-valid-x p-form-valid-y rounded-sm shadow-sm focus:outline-none focus:shadow-main/44 focus:shadow-md"
+              placeholder="yourname@company.com"
+            />
+
+            @if (getControl('email')?.errors && getControl('email')?.touched) {
+              <div
+                class="text-error bg-warning-container w-full p-form-error-x p-form-error-y rounded-sm shadow-sm mt-2 relative"
+              >
+                <ul class="list-none">
+                  @if (getControl('email')?.getError('required')) {
+                    <li>Input is required.</li>
+                  }
+                  @if (getControl('email')?.getError('email')) {
+                    <li>Please enter a valid email address.</li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
+          <div>
+            <label
+              for="title"
+              class="font-bold text-dark-grey text-label uppercase tracking-wider"
+            >
+              job title (optional)
+            </label>
+            <input
+              formControlName="title"
+              id="title"
+              name="title"
+              type="text"
+              class="bg-surface-high mt-1 block w-full p-form-valid-x p-form-valid-y rounded-sm shadow-sm focus:outline-none focus:shadow-main/44 focus:shadow-md"
+              placeholder="e.g. Project Manager"
+            />
+          </div>
+          <div>
+            <div class="flex items-center gap-4">
+              <div>
+                <label
+                  for="password"
+                  class="font-bold text-dark-grey text-label uppercase tracking-wider"
+                >
+                  Password
+                </label>
+                <input
+                  formControlName="password"
+                  id="password"
+                  name="password"
+                  type="password"
+                  class="bg-surface-high mt-1 block w-full p-form-valid-x p-form-valid-y rounded-sm shadow-sm focus:outline-none focus:shadow-main/44 focus:shadow-md"
+                  placeholder="Password"
+                />
+              </div>
+              <div>
+                <label
+                  for="confirmPassword"
+                  class="font-bold text-dark-grey text-label uppercase tracking-wider"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  formControlName="confirmPassword"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  class="bg-surface-high mt-1 block w-full p-form-valid-x p-form-valid-y rounded-sm shadow-sm focus:outline-none focus:shadow-main/44 focus:shadow-md"
+                  placeholder="Repeat your password"
+                />
+              </div>
+            </div>
+            <div
+              class="bg-container-valid rounded-lg p-4 mt-4 flex flex-col gap-2"
+            >
+              @for (rule of passwordRules; track rule.label) {
+                <p class="text-label text-label-grey">
+                  <i
+                    class="fa-regular"
+                    [class.text-check-success]="rule.test(passwordValue)"
+                    [class.fa-circle-check]="rule.test(passwordValue)"
+                    [class.fa-circle]="!rule.test(passwordValue)"
+                  ></i>
+                  {{ rule.label }}
+                </p>
+              }
+              @if (getControl('confirmPassword')?.value) {
+                <p class="text-label text-label-grey">
+                  <i
+                    class="fa-regular"
+                    [class.text-check-success]="!authForm.hasError('mismatch')"
+                    [class.fa-circle-check]="!authForm.hasError('mismatch')"
+                    [class.fa-circle]="authForm.hasError('mismatch')"
+                  ></i>
+
+                  Passwords match
+                </p>
+              }
+            </div>
+          </div>
+
+          <div>
+            <button
+              class="bg-primary-gradient shadow-card w-full text-white font-semibold py-button-y px-button-x rounded-lg cursor-pointer"
+            >
+              Create Account
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="pt-8">
+        <p class="text-grey text-body-14 text-center">
+          Already have an account?
+          <a
+            routerLink="/login"
+            class="text-primary font-semibold hover:underline"
+            >Log in</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
