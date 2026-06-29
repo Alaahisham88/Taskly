@@ -39,6 +39,19 @@ export class AuthAPIsService {
     );
   }
 
+  logout() {
+    return this.http.post(
+      environment.apiUrl + '/auth/v1/logout',
+      {},
+      {
+        headers: {
+          apikey: environment.supabasekey,
+          Authorization: `Bearer ${this.authService.getToken()}`,
+        },
+      },
+    );
+  }
+
   getUserData(): Observable<User> {
     return this.http.get<User>(
       environment.apiUrl + '/auth/v1/user',

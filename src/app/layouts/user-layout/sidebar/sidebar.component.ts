@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { AuthService } from '../../../features/auth/services/auth-service.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AUTH_CONSTANTS } from '../../../core/constants/auth.constants';
+import { AuthAPIsService } from '../../../features/auth/services/auth-apis.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,6 +12,7 @@ import { AUTH_CONSTANTS } from '../../../core/constants/auth.constants';
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
+  private readonly authApi = inject(AuthAPIsService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   @Input({ required: true })
@@ -26,8 +28,21 @@ export class SidebarComponent {
   mobileMenuClosed = new EventEmitter<void>();
 
   logout() {
-    this.authService.clearSession();
-    this.router.navigate([AUTH_CONSTANTS.ROUTES.LOGIN]);
+    if (!this.authService.getToken()) {
+      this.authService.clearSession();
+      this.router.navigate([AUTH_CONSTANTS.ROUTES.LOGIN]);
+      return;
+    }
+
+    this.authApi.logout().subscribe({
+      next: () => {
+        this.authService.clearSession();
+        this.router.navigate([AUTH_CONSTANTS.ROUTES.LOGIN]);
+      },
+      error: () => {
+        alert('Logout failed, please try again.');
+      },
+    });
   }
 
   closeMobileMenu() {

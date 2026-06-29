@@ -65,6 +65,10 @@ export class AuthService {
   clearSession() {
     this.localStorage.removeItem(AUTH_CONSTANTS.STORAGE_KEYS.SESSION);
     this.sessionStorage.removeItem(AUTH_CONSTANTS.STORAGE_KEYS.SESSION);
+    document.cookie =
+      'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie =
+      'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     this.currentUser.set(null);
   }
 }
