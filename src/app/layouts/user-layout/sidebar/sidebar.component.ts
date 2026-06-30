@@ -40,8 +40,10 @@ export class SidebarComponent {
         this.router.navigate([AUTH_CONSTANTS.ROUTES.LOGIN]);
       },
       error: (err) => {
-        console.log(err.status);
-        console.log(err.error);
+        console.error(err);
+
+        this.authService.clearSession();
+        this.router.navigate([AUTH_CONSTANTS.ROUTES.LOGIN]);
       },
     });
   }
