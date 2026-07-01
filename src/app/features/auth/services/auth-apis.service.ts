@@ -3,7 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { inject } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { LogInRequest, LogInResponse } from '../models/logIn.interface';
+import {
+  LogInRequest,
+  LogInResponse,
+  RefreshTokenRequest,
+} from '../models/logIn.interface';
 import { SignUpRequest, SignUpResponse } from '../models/signUp.interface';
 import { User } from '../../../core/models/user.models';
 import { AuthService } from './auth-service.service';
@@ -19,11 +23,6 @@ export class AuthAPIsService {
     return this.http.post<SignUpResponse>(
       environment.apiUrl + '/auth/v1/signup',
       data,
-      {
-        headers: {
-          apikey: environment.supabasekey,
-        },
-      },
     );
   }
 
@@ -31,37 +30,21 @@ export class AuthAPIsService {
     return this.http.post<LogInResponse>(
       environment.apiUrl + '/auth/v1/token?grant_type=password',
       data,
-      {
-        headers: {
-          apikey: environment.supabasekey,
-        },
-      },
     );
   }
 
   logout() {
-    return this.http.post(
-      environment.apiUrl + '/auth/v1/logout',
-      {},
-      {
-        headers: {
-          apikey: environment.supabasekey,
-          Authorization: `Bearer ${this.authService.getToken()}`,
-        },
-      },
+    return this.http.post(environment.apiUrl + '/auth/v1/logout', {});
+  }
+
+  refreshToken(data: RefreshTokenRequest): Observable<LogInResponse> {
+    return this.http.post<LogInResponse>(
+      environment.apiUrl + '/auth/v1/token?grant_type=refresh_token',
+      data,
     );
   }
 
   getUserData(): Observable<User> {
-    return this.http.get<User>(
-      environment.apiUrl + '/auth/v1/user',
-
-      {
-        headers: {
-          apikey: environment.supabasekey,
-          Authorization: `Bearer ${this.authService.getToken()}`,
-        },
-      },
-    );
+    return this.http.get<User>(environment.apiUrl + '/auth/v1/user');
   }
 }
